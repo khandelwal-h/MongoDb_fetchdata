@@ -1,23 +1,53 @@
-import logo from './logo.svg';
+import {useEffect, useState} from "react";
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
 function App() {
+  const [users,setUsers]=useState([])
+  useEffect(()=> {
+    axios.get('http://localhost:3001/getUsers')
+    .then(users => setUsers(users.data))
+    .catch(err=>console.log(err))
+  },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
+      <div className="w-50">     
+      
+            <table className="table">
+                      <thead>
+                               <tr>
+                                    <th>
+                                      Name
+                                    </th>
+                                     <th>
+                                    Email
+                                    </th>
+                                    <th>
+                                     Age
+                                    </th>
+                               </tr>
+                    </thead>
+                                <tbody>
+                                {
+                                  users.map(user=>{
+                                    return<tr>
+                                    
+                                      <td>{user.name}</td>
+                                      <td>{user.email}</td>
+                                      <td>{user.age}</td>
+                                      
+                                        
+                                      
+                                      
+                                      
+                                      </tr>
+
+                                  })
+                                }
+                                </tbody>
+            </table>
+    </div>
     </div>
   );
 }
